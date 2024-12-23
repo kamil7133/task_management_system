@@ -1,4 +1,7 @@
-from app import db
+from flask import Blueprint, request, jsonify
+from app.extensions import db
+
+project_bp = Blueprint('project', __name__, url_prefix='/projects')
 
 class Project(db.Model):
     __tablename__ = 'projects'
