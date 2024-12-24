@@ -12,4 +12,11 @@ def create_app():
     from .routes.project_routes import project_bp
     app.register_blueprint(project_bp)
 
+    from .routes.sprint_routes import sprint_bp
+    app.register_blueprint(sprint_bp)
+
+    from .routes.task_routes import task_bp
+    app.register_blueprint(task_bp)
+
     return app
+
