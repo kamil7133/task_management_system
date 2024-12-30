@@ -1,6 +1,6 @@
 from flask import Flask
 from config import Config
-from .extensions import db, migrate
+from app.extensions import db, migrate
 from app.models import Project, Sprint, Task
 from flask_sqlalchemy import SQLAlchemy
 
