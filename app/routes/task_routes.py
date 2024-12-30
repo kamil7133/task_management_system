@@ -48,8 +48,8 @@ def create_task():
 
     new_task = Task(
         title=data["title"],
-        description=data["description", ""],
-        status=data["status", "To do"],
+        description=data.get("description", ""),
+        status=data.get("status", "To Do"),
         sprint_id=data["sprint_id"]
     )
     db.session.add(new_task)
@@ -65,6 +65,7 @@ def create_task():
             "sprint_id": new_task.sprint_id
         }
     }), 201
+
 
 
 @task_bp.route('/<int:task_id>', methods=['PUT'])

@@ -23,3 +23,14 @@ class Sprint(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
 
     project = db.relationship('Project', backref='sprints')
+
+class Task(db.Model):
+    __tablename__ = 'tasks'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    status = db.Column(db.String(50), default="To Do")
+    sprint_id = db.Column(db.Integer, db.ForeignKey('sprints.id'), nullable=False)
+
+    sprint = db.relationship('Sprint', backref='tasks')

@@ -1,0 +1,25 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Task Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Task Management System</h1>
+        <!-- Możesz dodać tu menu nawigacyjne, np. linki do /projects itp. -->
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Kamil Piwowarczyk. All rights reserved.</p>
+    </footer>
+
+    <!-- Jeśli chcesz wstrzyknąć globalne skrypty, możesz to zrobić tutaj -->
+</body>
+</html>

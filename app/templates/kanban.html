@@ -1,0 +1,109 @@
+<!-- templates/kanban.html -->
+{% extends "base.html" %}
+
+{% block title %}
+Kanban Board
+{% endblock %}
+
+{% block content %}
+<h2>Kanban Board</h2>
+<div class="kanban-container">
+    <div id="todo" class="kanban-column" data-status="To Do">
+      <div class="column-header">To Do</div>
+    </div>
+    <div id="inprogress" class="kanban-column" data-status="In Progress">
+      <div class="column-header">In Progress</div>
+    </div>
+    <div id="done" class="kanban-column" data-status="Done">
+      <div class="column-header">Done</div>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+      fetchTasks();
+    };
+
+    async function fetchTasks() {
+      try {
+        const response = await fetch("/tasks/");
+        const tasks = await response.json();
+        renderTasks(tasks);
+      } catch (error) {
+        console.error("Fetch tasks error:", error);
+      }
+    }
+
+    function renderTasks(tasks) {
+      // Czyścimy kolumny
+      document.getElementById("todo").innerHTML = '<div class="column-header">To Do</div>';
+      document.getElementById("inprogress").innerHTML = '<div class="column-header">In Progress</div>';
+      document.getElementById("done").innerHTML = '<div class="column-header">Done</div>';
+
+      tasks.forEach(task => {
+        const taskDiv = document.createElement("div");
+        taskDiv.className = "task-item";
+        taskDiv.textContent = task.title;
+        taskDiv.draggable = true;
+        taskDiv.dataset.taskId = task.id;
+        taskDiv.addEventListener("dragstart", onDragStart);
+
+        if (task.status === "To Do") {
+          document.getElementById("todo").appendChild(taskDiv);
+        } else if (task.status === "In Progress") {
+          document.getElementById("inprogress").appendChild(taskDiv);
+        } else if (task.status === "Done") {
+          document.getElementById("done").appendChild(taskDiv);
+        }
+      });
+
+      makeColumnsDroppable();
+    }
+
+    function makeColumnsDroppable() {
+      const columns = document.querySelectorAll(".kanban-column");
+      columns.forEach(col => {
+        col.addEventListener("dragover", onDragOver);
+        col.addEventListener("drop", onDrop);
+      });
+    }
+
+    let draggedTaskId = null;
+
+    function onDragStart(e) {
+      draggedTaskId = e.target.dataset.taskId;
+      e.dataTransfer.effectAllowed = "move";
+    }
+
+    function onDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add("drag-over");
+      e.dataTransfer.dropEffect = "move";
+    }
+
+    function onDrop(e) {
+      e.preventDefault();
+      e.currentTarget.classList.remove("drag-over");
+
+      const newStatus = e.currentTarget.getAttribute("data-status");
+      updateTaskStatus(draggedTaskId, newStatus);
+    }
+
+    async function updateTaskStatus(taskId, newStatus) {
+      try {
+        const response = await fetch(`/tasks/${taskId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: newStatus })
+        });
+        if (response.ok) {
+          fetchTasks();
+        } else {
+          console.error("Failed to update status", response.status);
+        }
+      } catch (error) {
+        console.error("updateTaskStatus error:", error);
+      }
+    }
+</script>
+{% endblock %}
