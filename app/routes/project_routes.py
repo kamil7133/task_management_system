@@ -1,4 +1,3 @@
-import pylab as p
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for
 from app import db
 from app.models import Project
