@@ -2,10 +2,8 @@ from flask.cli import FlaskGroup
 from app import create_app, db
 from app.models import Project, Sprint, Task
 
-# Utwórz aplikację Flask
 app = create_app()
 
-# Utwórz grupę CLI dla aplikacji Flask
 cli = FlaskGroup(app)
 
 @cli.command("seed-data")
