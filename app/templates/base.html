@@ -12,14 +12,17 @@
         <!-- Możesz dodać tu menu nawigacyjne, np. linki do /projects itp. -->
     </header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<main>
+    {% block content %}{% endblock %}
+    <a href="{{ url_for('sprint.export_sprints_csv') }}" class="btn btn-secondary">
+        Export to CSV
+    </a>
+</main>
+
 
     <footer>
         <p>&copy; 2024 Kamil Piwowarczyk. All rights reserved.</p>
     </footer>
 
-    <!-- Jeśli chcesz wstrzyknąć globalne skrypty, możesz to zrobić tutaj -->
 </body>
 </html>

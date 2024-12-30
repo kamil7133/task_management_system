@@ -15,14 +15,13 @@ class Project(db.Model):
 
 class Sprint(db.Model):
     __tablename__ = 'sprints'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    start_date = db.Column(db.Date, default=date.today())
+    start_date = db.Column(db.Date, nullable=True)
     end_date = db.Column(db.Date, nullable=True)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
 
-    project = db.relationship('Project', backref='sprints')
+    project = db.relationship("Project", backref="sprints")
 
 class Task(db.Model):
     __tablename__ = 'tasks'
@@ -32,5 +31,4 @@ class Task(db.Model):
     description = db.Column(db.Text, nullable=True)
     status = db.Column(db.String(50), default="To Do")
     sprint_id = db.Column(db.Integer, db.ForeignKey('sprints.id'), nullable=False)
-
     sprint = db.relationship('Sprint', backref='tasks')

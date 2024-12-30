@@ -105,5 +105,21 @@ Kanban Board
         console.error("updateTaskStatus error:", error);
       }
     }
+
+    async function fetchSprints() {
+  const resp = await fetch("/sprints/");
+  const sprints = await resp.json();
+  if (sprints.length > 0) {
+    const s = sprints[0];
+    const sprintInfo = document.getElementById("sprint-info");
+    sprintInfo.textContent = `Sprint: ${s.name} (Start: ${s["start date"]}, End: ${s.end_date})`;
+  }
+}
+
+window.onload = () => {
+  fetchSprints();
+  fetchTasks();
+};
+
 </script>
 {% endblock %}
