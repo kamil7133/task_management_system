@@ -11,13 +11,13 @@ def create_app():
     db.init_app(wgi)
     migrate.init_app(wgi, db)
 
-    from .app.routes.project_routes import project_bp
+    from app.routes.project_routes import project_bp
     wgi.register_blueprint(project_bp)
 
-    from .app.routes.sprint_routes import sprint_bp
+    from app.routes.sprint_routes import sprint_bp
     wgi.register_blueprint(sprint_bp)
 
-    from .app.routes.task_routes import task_bp
+    from app.routes.task_routes import task_bp
     wgi.register_blueprint(task_bp)
 
 
