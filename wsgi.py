@@ -11,13 +11,13 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from .app.routes.project_routes import project_bp
+    from app.routes.project_routes import project_bp
     app.register_blueprint(project_bp)
 
-    from .app.routes.sprint_routes import sprint_bp
+    from app.routes.sprint_routes import sprint_bp
     app.register_blueprint(sprint_bp)
 
-    from .app.routes.task_routes import task_bp
+    from app.routes.task_routes import task_bp
     app.register_blueprint(task_bp)
 
 
