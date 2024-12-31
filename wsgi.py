@@ -5,25 +5,25 @@ from app.models import Project, Sprint, Task
 from flask_sqlalchemy import SQLAlchemy
 
 def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
+    wgi = Flask(__name__)
+    wgi.config.from_object(Config)
 
-    db.init_app(app)
-    migrate.init_app(app, db)
+    db.init_app(wgi)
+    migrate.init_app(wgi, db)
 
-    from app.routes.project_routes import project_bp
-    app.register_blueprint(project_bp)
+    from .app.routes.project_routes import project_bp
+    wgi.register_blueprint(project_bp)
 
-    from app.routes.sprint_routes import sprint_bp
-    app.register_blueprint(sprint_bp)
+    from .app.routes.sprint_routes import sprint_bp
+    wgi.register_blueprint(sprint_bp)
 
-    from app.routes.task_routes import task_bp
-    app.register_blueprint(task_bp)
+    from .app.routes.task_routes import task_bp
+    wgi.register_blueprint(task_bp)
 
 
 
-app = create_app()
+wgi = create_app()
 
 if __name__ == '__main__':
-    app.run()
+    wgi.run()
 
