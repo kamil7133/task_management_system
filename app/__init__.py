@@ -1,5 +1,5 @@
 from flask import Flask
-from task_management_system.config import Config
+from config import Config
 from extensions import db, migrate
 from models import Project, Sprint, Task
 from flask_sqlalchemy import SQLAlchemy
@@ -20,4 +20,5 @@ def create_app():
     from routes.task_routes import task_bp
     app.register_blueprint(task_bp)
 
+    return app
 
